@@ -43,8 +43,8 @@ def get_synset_term(words):
 # Build search term according to following format. | is equivalent to OR operator in youtube API
 # (aa|na|(alcoholics|narcotics anonymous)) (addiction (12|Twelve|Step) recovery|speaker)
 def get_search_term():
-  alcoholics_terms = get_synset_term('alcoholic')
-  narcotic_terms = get_synset_term('narcotic')
+  alcoholics_terms = get_synset_term('alcoholic,booze')
+  narcotic_terms = get_synset_term('narcotic,drug')
   anonymous_terms = get_synset_term('anonymous')
   addiction_terms = get_synset_term('addiction')
   recovery_terms = get_synset_term('recovery,treatment,rehab')
@@ -62,6 +62,9 @@ def youtube_search(options, nextPageToken=None):
 
   # Call the search.list method to retrieve results matching the specified
   # query term.
+  # Returns about 500 unique results regardless of totalResults being much much more
+  # After that results start duplicating
+  # Check https://code.google.com/p/gdata-issues/issues/detail?id=4282 for the issue
   search_response = youtube.search().list(
     q=options.q,
     type="video",
@@ -73,7 +76,7 @@ def youtube_search(options, nextPageToken=None):
 
   search_videos = []
 
-  nextPageToken = search_response["nextPageToken"]
+  nextPageToken = search_response.get("nextPageToken")
 
   # Merge video ids
   for search_result in search_response.get("items", []):
@@ -88,7 +91,7 @@ def youtube_search(options, nextPageToken=None):
   ).execute()
 
 
-  # Add each result to the list, and then display the list of matching videos.
+  # Add each result to the list, and then add details of matching videos.
   for video_result in video_response.get("items", []):
     videos.append([video_result.get("id"), video_result["snippet"].get("title"), video_result["snippet"].get("description"), video_result["snippet"]["channelId"], video_result["snippet"]["publishedAt"], video_result["snippet"].get("tags")] + [video_result["statistics"][statistic_key] for statistic_key in video_result["statistics"]])
 
