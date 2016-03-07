@@ -55,5 +55,8 @@ Optional arguments include `--q search_term` and `--max_results 20`
 Sample Word Cloud
 -----------------
 
+### Youtube Tag Cloud ###
 ![Alt Youtube](youtube_tag_cloud.png?raw=true "Youtube Tag Cloud")
+
+### Tumblr Tag Cloud ###
 ![Alt Tumblr](tumblr_tag_cloud.png?raw=true "Tumblr Tag Cloud")
