@@ -51,3 +51,9 @@ python retrieve_tumblr.py
 ```
 
 Optional arguments include `--q search_term` and `--max_results 20`
+
+Sample Word Cloud
+-----------------
+
+![Alt Youtube](youtube_tag_cloud.png?raw=true "Youtube Tag Cloud")
+![Alt Tumblr](tumblr_tag_cloud.png?raw=true "Tumblr Tag Cloud")
